@@ -4,7 +4,7 @@ v16.3.0 공식문서에 있는 주요 기능에 대한 고찰
 
 ---
 
-## > description
+## ` description`
 
 
 ### http
@@ -26,8 +26,17 @@ v16.3.0 공식문서에 있는 주요 기능에 대한 고찰
 - 다른 프로그램을 실행하고 싶거나 shell 명령어를 수행하고 싶을 때 해당 모듈을 사용하여 수행 가능
 
 --- 
+## ` 주요 모듈`
 
-## > 작업 예정
+### Sequelize (ORM)
+- https://sequelize.org/v6/manual/model-querying-basics.html
+- https://velog.io/@cadenzah/sequelize-document-3
+- 위 사이트 기준으로 내용 확인하며 데모 코드 작성.
+- 기본적인 사용법 위주로 주석과 함께 코드로 작성
+
+--- 
+
+## ` 작업 예정`
 
 ### Assert
 
@@ -36,7 +45,7 @@ v16.3.0 공식문서에 있는 주요 기능에 대한 고찰
 - 테스트 코드 및 샘플로직은 Jest study 진행할 때 추가할 예정
 
 ---
-## > 알아만 둡시다.
+## ` 알아만 둡시다.`
 
 ### c++ addons
 - C++ 로 작성된 라이브러리간의 인터페이스를 활용하여 Nodejs 모듈로 로드하여 사용
