@@ -34,6 +34,14 @@ v16.3.0 공식문서에 있는 주요 기능에 대한 고찰
 - 위 사이트 기준으로 내용 확인하며 데모 코드 작성.
 - 기본적인 사용법 위주로 주석과 함께 코드로 작성
 
+
+### node-schedule
+- https://www.npmjs.com/package/node-schedule
+- 기본적인 전체 사용법 데모 코드 작성.
+- v2.0.0 과 v2.1.0 이 success, error 발생부분에서 다르게 동작하니 주의
+- v2.0.0 : exception 발생, rejected Promise 발생에 대하여 error emitter 실행
+- v2.1.0 : exception 발생시 오류가 발생하여 프로그램 중지됨, success emitter 추가됨
+
 --- 
 
 ## ` 작업 예정`
