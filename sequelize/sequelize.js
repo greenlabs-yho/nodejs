@@ -235,7 +235,7 @@ let sequelize = new Sequelize('sqlite::memory:', {
     await Movie.bulkCreate([
         {name: '물랑루즈', nation: '미국'},
         //{name: '냉정과 열정사이', nation: "일본"}
-        {nation: "일본"}
+        {nation: "일본"}  
     ], {
         validate: true
     }).catch(err => {
@@ -245,9 +245,81 @@ let sequelize = new Sequelize('sqlite::memory:', {
     bulkMovie = await Movie.findAll()
     console.log('validate: ', JSON.stringify(bulkMovie, null, 2))
 
-    // 아래부터 시작하면 됨.
-    // https://sequelize.org/v6/manual/model-querying-basics.html#ordering-and-grouping
+    await Member.bulkCreate([
+        {name: '김다미', age: "30", address: "부산시"},
+        {name: '최우식', age: '30', address: "서울시"}
+    ]);
 
+    /*
+     * Order By, limit, offset...
+     */
+    let orderList = await Member.findAll({
+        // 연령별 정순, 이름별 역순 정렬 후 두번째 row 하나만 추출
+        order: ["age", ["name", "DESC"]],
+        offset: 2,
+        limit: 1
+    })
+    console.log('order : ', JSON.stringify(orderList, null, 2))
+
+    /*
+     * Group by... 
+     */
+    let groupList = await Member.findAll({
+        // 연령별 인원수 추출
+        attributes: [
+            'age',
+            [Sequelize.fn('COUNT', Sequelize.col('createdAt')), 'cnt'], // 집계함수, alias
+        ],
+        group: 'age'
+    })
+    console.log('group : ', JSON.stringify(groupList, null, 2))
+
+    const pad = n => { return n<10 ? "0"+ n : n }
+    /*
+     * Virtual fields, Setter/Getter
+     */
+    const Rent = sequelize.define('Rent', {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        book_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        member_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        // Sqlite 의 datatype 은 string/integer/real 뿐.
+        rent_date: { // 대여일
+            type: DataTypes.STRING
+        },
+        return_date: { // 반납일
+            type: DataTypes.STRING
+        },
+        today: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                let todate = new Date();
+                return pad(todate.getFullYear()) + pad(todate.getMonth()+1) + pad(todate.getDate())
+            },
+            set(value){
+                throw new Error("set value is not allowed")
+            }
+        }
+    }, {
+        freezeTableName: true
+    });
+    await Rent.sync();
+    let newRent = await Rent.build({book_id: 1, member_id: 1})
+    newRent.rent_date = newRent.today;
+    await newRent.save();
+    console.log("rent: ", JSON.stringify(newRent, 0, 2));
+
+    // join, index, pool 은 추가적으로 반드시 할 것.
+    
 })().catch(e => {
     console.log(e);
 }).finally(async () => {
