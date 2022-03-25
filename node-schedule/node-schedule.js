@@ -9,7 +9,7 @@ const schedule = require('node-schedule');
 // 공식홈페이지 참조.
 let cnt = 0;
 const job = schedule.scheduleJob('*/3 * * * * *', (fireDate) => {
-    console.log(`[${module.NODE_ENV}] It's scheduled. fireDate : ${fireDate}`)
+    console.log(`[${process.env.NODE_ENV}] It's scheduled. fireDate : ${fireDate}`)
 
     if (++cnt > 2) {
         // reject promise 가 발생하면 error emitter 가 실행
