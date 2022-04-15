@@ -48,6 +48,15 @@ job.on('success', (value) => {
 })
 
 
+const job2 = schedule.scheduleJob('*/5 * * * * *', (fireDate) => {
+    console.log(`[${process.env.NODE_ENV}] It's scheduled 555. fireDate : ${fireDate}`)
+
+    // 등록한 success 이벤트에게 전달.
+    // v2.1.0 부터 지원되는 기능
+    return Promise.resolve("resolved Promise")
+})
+
+
 // 종료 요청시 처리
 process.on('SIGINT', () => {
     job.cancel();

@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+/.history
+/sequelize/timezone.js
+
+
+multiCallTest.js
+multiCallTest2.js
+sleEntp.js
+sleEntpQuery.js
